@@ -1,9 +1,7 @@
-gsap.from("ul li:last-child", {
-  duration: 0.7,
-  y: 40,
-  ease: "power2.out",
-  repeat: -1,
-  repeatDelay: 1,
-  yoyo: true,
-  yoyoEase: "none",
-});
+gsap.fromTo(
+  "header",
+  { x: -40 },
+  { x: 40, repeat: 2, duration: 1, ease: "power2.inOut", yoyo: true }
+);
+
+gsap.set("ul", { y: 100 });

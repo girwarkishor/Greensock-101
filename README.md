@@ -131,3 +131,27 @@ gsap.from("ul li:last-child", {
   yoyoEase: "none",
 });
 ```
+
+## From and Set Tweens
+
+gsap.fromTo('<selector>',{<from>},{<to>})
+
+```
+gsap.fromTo("header", { x: -40 }, { x: 40, repeat: 2 });
+```
+
+gsap.fromTo('<selector>',{<from>},{<to> + <special properties>}) - All the special properties must written in to var
+
+```
+gsap.fromTo(
+  "header",
+  { x: -40 },
+  { x: 40, repeat: 2, duration: 1, ease: "power2.inOut", yoyo: true }
+);
+```
+
+gsap.set() - It doesn't do any animation it just set the position of item (you can use it onload where we can set the page element to particular position)
+
+```
+gsap.set("ul", { y: 100 });
+```
