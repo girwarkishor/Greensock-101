@@ -488,3 +488,229 @@ let tl = gsap.timeline({
   // i.e. onUpdateParams (Array)
 });
 ```
+
+# Controls and Callbacks
+
+## Controls
+
+```
+// retain animation reference to control later
+let anim = gsap.to(...); // or gsap.timeline(...);
+// most methods can be used as getters or setters
+anim.play() // plays forward
+  .pause()
+  .resume() // respects direction
+  .reverse()
+  .restart()
+  .timeScale(2) // 2 = double speed, 0.5 = half speed
+  .seek(1.5) // jump to a time (in seconds) or label
+  .progress(0.5) // jump to halfway
+  .totalProgress(0.8) // includes repeats
+  // when used as setter, returns animation (chaining)
+
+  // other useful methods (tween and timeline)
+  .kill() // immediately destroy
+  .isActive() // true if currently animating
+  .then() // Promise
+  .invalidate() // clear recorded start/end values
+  .eventCallback() // get/set an event callback
+
+  // timeline-specific methods
+  // add label, tween, timeline, or callback
+  .add(thing, position)
+  // calls function at given point
+  .call(func, params, position)
+  // get an Array of the timeline's children
+  .getChildren()
+  // empties the timeline
+  .clear()
+  // animate playhead to a position linearly
+  .tweenTo(timeOrLabel, {vars})
+  // ^^ with both start and end positions
+  .tweenFromTo(from, to, {vars})
+```
+
+Example
+
+```
+const timeline = gsap.timeline({
+  duration: 1,
+  paused: true
+});
+
+timeline
+  .from("body", {
+    backgroundColor: "#fff",
+    ease: "none",
+  })
+  .fromTo(
+    ["h1", ".intro"],
+    {
+      opacity: 0,
+      y: -20,
+    },
+    {
+      opacity: 1,
+      y: 20,
+      ease: "power1.out",
+      stagger: 0.2,
+    }
+  )
+  .from(["img", "h2"], {
+    opacity: 0,
+    ease: "none",
+  })
+  .fromTo(
+    "ul li",
+    {
+      opacity: 0,
+      Y: -20,
+    },
+    {
+      opacity: 1,
+      y: 0,
+      ease: "power1.out",
+      stagger: 0.2,
+    }
+  );
+
+const playButton = document.getElementById("btnPlay");
+const pauseButton = document.getElementById("btnPause");
+const resumeButton = document.getElementById("btnResume");
+const reverseButton = document.getElementById("btnReverse");
+const speedUpButton = document.getElementById("btnSpeedUp");
+const slowDownButton = document.getElementById("btnSlowDown");
+const seekButton = document.getElementById("btnSeek");
+const progressButton = document.getElementById("btnProgress");
+const restartButton = document.getElementById("btnRestart");
+
+playButton.addEventListener("click", () => {
+  timeline.play();
+});
+pauseButton.addEventListener("click", () => {
+  timeline.pause();
+});
+resumeButton.addEventListener("click", () => {
+  timeline.resume();
+});
+reverseButton.addEventListener("click", () => {
+  timeline.reverse();
+});
+speedUpButton.addEventListener("click", () => {
+  timeline.timeScale(2);
+});
+slowDownButton.addEventListener("click", () => {
+  timeline.timeScale(0.5);
+});
+
+console.log(timeline.duration());
+seekButton.addEventListener("click", () => {
+  timeline.seek(1);
+});
+progressButton.addEventListener("click", () => {
+  timeline.progress(0.5);
+});
+restartButton.addEventListener("click", () => {
+  timeline.restart();
+});
+```
+
+### gsap callback functions
+
+```
+const runStart = () => {
+  console.log("onStart");
+};
+
+const runUpdate = () => {
+  console.log("onUpdate");
+};
+
+const runComplete = () => {
+  console.log("onComplete");
+};
+
+const timeline = gsap.timeline({
+  duration: 1,
+  paused: true,
+  onStart: runStart,
+  onUpdate: runUpdate,
+  onComplete: runComplete,
+});
+
+timeline
+  .from("body", {
+    backgroundColor: "#fff",
+    ease: "none",
+  })
+  .fromTo(
+    ["h1", ".intro"],
+    {
+      opacity: 0,
+      y: -20,
+    },
+    {
+      opacity: 1,
+      y: 20,
+      ease: "power1.out",
+      stagger: 0.2,
+    }
+  )
+  .from(["img", "h2"], {
+    opacity: 0,
+    ease: "none",
+  })
+  .fromTo(
+    "ul li",
+    {
+      opacity: 0,
+      Y: -20,
+    },
+    {
+      opacity: 1,
+      y: 0,
+      ease: "power1.out",
+      stagger: 0.2,
+    }
+  );
+
+const playButton = document.getElementById("btnPlay");
+const pauseButton = document.getElementById("btnPause");
+const resumeButton = document.getElementById("btnResume");
+const reverseButton = document.getElementById("btnReverse");
+const speedUpButton = document.getElementById("btnSpeedUp");
+const slowDownButton = document.getElementById("btnSlowDown");
+const seekButton = document.getElementById("btnSeek");
+const progressButton = document.getElementById("btnProgress");
+const restartButton = document.getElementById("btnRestart");
+
+playButton.addEventListener("click", () => {
+  timeline.play();
+});
+pauseButton.addEventListener("click", () => {
+  timeline.pause();
+});
+resumeButton.addEventListener("click", () => {
+  timeline.resume();
+});
+reverseButton.addEventListener("click", () => {
+  timeline.reverse();
+});
+speedUpButton.addEventListener("click", () => {
+  timeline.timeScale(2);
+});
+slowDownButton.addEventListener("click", () => {
+  timeline.timeScale(0.5);
+});
+
+console.log(timeline.duration());
+seekButton.addEventListener("click", () => {
+  timeline.seek(1);
+});
+progressButton.addEventListener("click", () => {
+  timeline.progress(0.5);
+});
+restartButton.addEventListener("click", () => {
+  timeline.restart();
+});
+```
