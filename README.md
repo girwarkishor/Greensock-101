@@ -155,3 +155,336 @@ gsap.set() - It doesn't do any animation it just set the position of item (you c
 ```
 gsap.set("ul", { y: 100 });
 ```
+
+## Timelines
+
+Without timelines (general)
+
+```
+gsap.from("body", {
+  backgroundColor: "#fff",
+  duration: 1.7,
+  ease: "none",
+});
+
+gsap.fromTo(
+  ["h1", ".intro"],
+  {
+    opacity: 0,
+    y: -20,
+  },
+  {
+    opacity: 1,
+    y: 20,
+    duration: 0.6,
+    ease: "power1.out",
+    delay: 1.5,
+    stagger: 0.2,
+  }
+);
+
+gsap.from(["img", "h2"], {
+  opacity: 0,
+  duration: 0.7,
+  ease: "none",
+  delay: 2.8,
+});
+
+gsap.fromTo(
+  "ul li",
+  {
+    opacity: 0,
+    Y: -20,
+  },
+  {
+    opacity: 1,
+    y: 0,
+    duration: 0.6,
+    ease: "power1.out",
+    stagger: 0.2,
+    delay: 4,
+  }
+);
+```
+
+Timeline using add method
+
+```
+const timeline = gsap.timeline();
+
+const tween = gsap.from("body", {
+  backgroundColor: "#fff",
+  duration: 1.7,
+  ease: "none",
+});
+
+timeline.add(tween);
+```
+
+Timeline executes the function one after another no need of any delay
+
+```
+const timeline = gsap.timeline();
+
+timeline
+  .from("body", {
+    backgroundColor: "#fff",
+    duration: 1.7,
+    ease: "none",
+  })
+  .fromTo(
+    ["h1", ".intro"],
+    {
+      opacity: 0,
+      y: -20,
+    },
+    {
+      opacity: 1,
+      y: 20,
+      duration: 0.6,
+      ease: "power1.out",
+      stagger: 0.2,
+    }
+  )
+  .from(["img", "h2"], {
+    opacity: 0,
+    duration: 0.7,
+    ease: "none",
+  })
+  .fromTo(
+    "ul li",
+    {
+      opacity: 0,
+      Y: -20,
+    },
+    {
+      opacity: 1,
+      y: 0,
+      duration: 0.6,
+      ease: "power1.out",
+      stagger: 0.2,
+    }
+  );
+```
+
+Position parameter (controls placement) : -=1 for overlapping the animation also you can use +=2 for delay
+
+0.7 // exactly 0.7 seconds into the timeline (absolute)
+"-=0.7" // overlap with previous by 0.7 sec
+"myLabel" // insert at "myLabel" position
+"myLabel+=0.2" // 0.2 seconds after "myLabel"
+"<" // align with start of most recently-added child
+"<0.2" // 0.2 seconds after ^^
+
+```
+const timeline = gsap.timeline();
+
+timeline
+  .from("body", {
+    backgroundColor: "#fff",
+    duration: 1.7,
+    ease: "none",
+  })
+  .fromTo(
+    ["h1", ".intro"],
+    {
+      opacity: 0,
+      y: -20,
+    },
+    {
+      opacity: 1,
+      y: 20,
+      duration: 0.6,
+      ease: "power1.out",
+      stagger: 0.2,
+    },
+    "-=1"
+  )
+  .from(["img", "h2"], {
+    opacity: 0,
+    duration: 0.7,
+    ease: "none",
+  })
+  .fromTo(
+    "ul li",
+    {
+      opacity: 0,
+      Y: -20,
+    },
+    {
+      opacity: 1,
+      y: 0,
+      duration: 0.6,
+      ease: "power1.out",
+      stagger: 0.2,
+    }
+  );
+```
+
+Absolute position : It start at exact 2s at timeline
+
+```
+const timeline = gsap.timeline();
+
+timeline
+  .from("body", {
+    backgroundColor: "#fff",
+    duration: 1.7,
+    ease: "none",
+  })
+  .fromTo(
+    ["h1", ".intro"],
+    {
+      opacity: 0,
+      y: -20,
+    },
+    {
+      opacity: 1,
+      y: 20,
+      duration: 0.6,
+      ease: "power1.out",
+      stagger: 0.2,
+    },
+    2
+  )
+  .from(["img", "h2"], {
+    opacity: 0,
+    duration: 0.7,
+    ease: "none",
+  })
+  .fromTo(
+    "ul li",
+    {
+      opacity: 0,
+      Y: -20,
+    },
+    {
+      opacity: 1,
+      y: 0,
+      duration: 0.6,
+      ease: "power1.out",
+      stagger: 0.2,
+    }
+  );
+```
+
+Insert 'myLab' position: The function set with myLab executed at the same time
+
+```
+const timeline = gsap.timeline();
+
+timeline
+  .from("body", {
+    backgroundColor: "#fff",
+    duration: 1.7,
+    ease: "none",
+  })
+  .fromTo(
+    ["h1", ".intro"],
+    {
+      opacity: 0,
+      y: -20,
+    },
+    {
+      opacity: 1,
+      y: 20,
+      duration: 0.6,
+      ease: "power1.out",
+      stagger: 0.2,
+    },
+    "myLabel"
+  )
+  .from(["img", "h2"], {
+    opacity: 0,
+    duration: 0.7,
+    ease: "none",
+  })
+  .fromTo(
+    "ul li",
+    {
+      opacity: 0,
+      Y: -20,
+    },
+    {
+      opacity: 1,
+      y: 0,
+      duration: 0.6,
+      ease: "power1.out",
+      stagger: 0.2,
+    },
+    "myLabel"
+  );
+```
+
+We can define generic duration at timeline() function
+
+```
+const timeline = gsap.timeline({ duration: 1 });
+
+timeline
+  .from("body", {
+    backgroundColor: "#fff",
+    ease: "none",
+  })
+  .fromTo(
+    ["h1", ".intro"],
+    {
+      opacity: 0,
+      y: -20,
+    },
+    {
+      opacity: 1,
+      y: 20,
+      ease: "power1.out",
+      stagger: 0.2,
+    }
+  )
+  .from(["img", "h2"], {
+    opacity: 0,
+    ease: "none",
+  })
+  .fromTo(
+    "ul li",
+    {
+      opacity: 0,
+      Y: -20,
+    },
+    {
+      opacity: 1,
+      y: 0,
+      ease: "power1.out",
+      stagger: 0.2,
+    }
+  );
+```
+
+Control timeline : We can handle using any event listener
+
+```
+const timeline = gsap.timeline({ duration: 1, paused: true });
+```
+
+Timeline Cheatsheet
+
+```
+// Create a timeline
+let tl = gsap.timeline({
+  delay: 0.5,
+  paused: true, // default is false
+  repeat: 2, // number of repeats (-1 for infinite)
+  repeatDelay: 1, // seconds between repeats
+  repeatRefresh: true, // invalidates on each repeat
+  yoyo: true, // if true > A-B-B-A, if false > A-B-A-B
+  defaults: { // children inherit these defaults
+    duration: 1,
+    ease: "none"
+  },
+  smoothChildTiming: true,
+  autoRemoveChildren: true,
+  onComplete: myFunc,
+  // other callbacks:
+  // onStart, onUpdate, onRepeat, onReverseComplete
+  // Each callback has a params property as well
+  // i.e. onUpdateParams (Array)
+});
+```

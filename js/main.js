@@ -1,7 +1,37 @@
-gsap.fromTo(
-  "header",
-  { x: -40 },
-  { x: 40, repeat: 2, duration: 1, ease: "power2.inOut", yoyo: true }
-);
+const timeline = gsap.timeline({ duration: 1, paused: true });
 
-gsap.set("ul", { y: 100 });
+timeline
+  .from("body", {
+    backgroundColor: "#fff",
+    ease: "none",
+  })
+  .fromTo(
+    ["h1", ".intro"],
+    {
+      opacity: 0,
+      y: -20,
+    },
+    {
+      opacity: 1,
+      y: 20,
+      ease: "power1.out",
+      stagger: 0.2,
+    }
+  )
+  .from(["img", "h2"], {
+    opacity: 0,
+    ease: "none",
+  })
+  .fromTo(
+    "ul li",
+    {
+      opacity: 0,
+      Y: -20,
+    },
+    {
+      opacity: 1,
+      y: 0,
+      ease: "power1.out",
+      stagger: 0.2,
+    }
+  );
