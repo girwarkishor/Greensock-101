@@ -489,9 +489,9 @@ let tl = gsap.timeline({
 });
 ```
 
-# Controls and Callbacks
+## Controls and Callbacks
 
-## Controls
+### Controls
 
 ```
 // retain animation reference to control later
@@ -714,3 +714,17 @@ restartButton.addEventListener("click", () => {
   timeline.restart();
 });
 ```
+
+## GSAP Types
+
+### Greensock Snippets
+
+Install gsap in Visual Studio Code so that gsap snippets should be available in VS code
+
+```
+npm i gsap
+```
+
+### gsap snippets for VSCode
+
+Install GreenSock Snippets from VS Code Extension
